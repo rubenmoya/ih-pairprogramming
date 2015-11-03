@@ -1,42 +1,36 @@
 require 'sinatra'
 require_relative './lib/calculator.rb'
+require 'pry'
 
 get "/" do
   erb :home
 end
 
-post "/calculate_add" do
+post "/" do
   first = params[:first_number].to_i
   second = params[:second_number].to_i
+  operation = params[:operation]
 
-  @result = Calculator.new.add(first, second)
 
-  erb :home
-end
+  if operation == "add"
+    @result = Calculator.new.add(first, second)
+    @print_result = "#{first} + #{second} = #{@result}"
+  elsif operation == "substract"
+    @result = Calculator.new.substract(first, second)
+    @print_result = "#{first} - #{second} = #{@result}"
+  elsif operation == "multiply"
+    @result = Calculator.new.multiply(first, second)
+    @print_result = "#{first} x #{second} = #{@result}"
+  elsif operation == "divide"
+    @result = Calculator.new.divide(first, second)
+    @print_result = "#{first} / #{second} = #{@result}"
+  end
 
-post "/calculate_substract" do
-  first = params[:first_number].to_i
-  second = params[:second_number].to_i
+  if params[:save_file]
+    IO.write("./public/result.txt", params[:save_file])
+    @next_num = IO.read("./public/result.txt")
+  end
 
-  @result = Calculator.new.substract(first, second)
-
-  erb :home
-end
-
-post "/calculate_multiply" do
-  first = params[:first_number].to_i
-  second = params[:second_number].to_i
-
-  @result = Calculator.new.multiply(first, second)
-
-  erb :home
-end
-
-post "/calculate_divide" do
-  first = params[:first_number].to_i
-  second = params[:second_number].to_i
-
-  @result = Calculator.new.divide(first, second)
 
   erb :home
 end
