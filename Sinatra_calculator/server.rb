@@ -1,6 +1,6 @@
 require 'sinatra'
+require 'sinatra/reload'
 require_relative './lib/calculator.rb'
-require 'pry'
 
 get "/" do
   erb :home
