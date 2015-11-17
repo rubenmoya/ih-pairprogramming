@@ -1,0 +1,6 @@
+<form action="/new" method="POST">
+  <label for="original_url">Url</label>
+  <input type="text" name="original_url">
+  <button type="submit">Short me!</button>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+</form>
